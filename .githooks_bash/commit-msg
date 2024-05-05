@@ -4,8 +4,16 @@ import re
 
 ## Conventional commits
 
+def parseBreakingChanges(exclamation_mark, commit_subject, commit_body):
+    breaking_changes = []
+    if exclamation_mark:
+        breaking_changes.append(commit_subject)
+    if commit_body:
+        breaking_changes += re.findall(r"BREAKING CHANGE: (.+)", commit_body)
+    return breaking_changes
+
 error_message = "The commit message format must be a conventional commit (https://www.conventionalcommits.org/en/v1.0.0/)"
-pattern = r"^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w\-\.]+\))?(!)?: ([\w ])+([\s\S]*)"
+pattern = r"^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([\w\-\.]+\))?(!)?: ((?:[\w ])+)(?:\n+((?:[^#\n]+\n*?)+))??(?:\n+((?:[A-Z][a-z](?:-[a-z]+): (?:[A-Za-z]+ )+<[\w\-\.]+@(?:[\w\-]+\.)+[\w\-]{2,4}>)(?:\n+[A-Z][a-z](?:-[a-z]+): (?:[A-Za-z]+ )+<[\w\-\.]+@(?:[\w\-]+\.)+[\w\-]{2,4}>)))?(?:\n+((?:#.*\n*?)+))?\n*$"
 
 with open("./.git/HEAD") as f:
     branch = f.read().removeprefix("ref: ").strip()
@@ -13,6 +21,18 @@ with open("./.git/HEAD") as f:
 with open("./.git/COMMIT_EDITMSG") as f:
     message = f.read()
 
+_match = re.match(pattern, message)
+breaking_changes = parseBreakingChanges(_match.groups()[2], _match.groups()[3], _match.groups()[4])
+commit_info = {
+    "type": _match.groups()[0],
+    "scope": _match.groups()[1][1:-1] if _match.groups()[1] else None,
+    "isBreaking": len(breaking_changes) > 0,
+    "breakingChanges": breaking_changes,
+    "subject": _match.groups()[3],
+    "footers": _match.groups()[5].split("\n") if _match.groups()[5] else None,
+    "comments": _match.groups()[6]
+}
+
 if branch == 'refs/heads/master' or branch == 'refs/heads/main':
-    if not re.match(pattern, message):
+    if not _match:
         raise Exception(error_message)
