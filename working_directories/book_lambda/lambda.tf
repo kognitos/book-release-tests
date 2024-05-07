@@ -7,7 +7,6 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "terraform-mati-tests"
     region = "us-west-2"
   }
 }
@@ -23,17 +22,21 @@ data "archive_file" "lambda_source_code" {
 }
 
 data "aws_iam_role" "lambda_role" {
-  name = var.lambda_role_name
+  name = "${var.book_name}_lambda_role"
 }
 
-resource "aws_lambda_function" "book_lambda" {
-  filename      = "lambda_function_payload.zip"
-  function_name = "mati-test-lambda-${var.book_version}"
-  role          = data.aws_iam_role.lambda_role.arn
-  handler       = "lambda_function.lambda_handler"
-  runtime       = "python3.9"
+resource "aws_lambda_function" "python" {
+  package_type  = "Image"
+  image_uri     = var.image_uri
+  function_name = "${var.book_name}-lambda-${var.book_version}"
+  role          = aws_iam_role.python.arn
+  timeout       = 60
+  memory_size   = 512
+  description   = "python native sandbox"
 
-  source_code_hash = data.archive_file.lambda_source_code.output_base64sha256
+  tracing_config {
+    mode = "Active"
+  }
 
   environment {
     variables = {
@@ -43,7 +46,7 @@ resource "aws_lambda_function" "book_lambda" {
 
   tags = {
     environment = var.environment
-    owner       = var.owner
     version     = var.book_version
+    owner       = var.owner
   }
 }

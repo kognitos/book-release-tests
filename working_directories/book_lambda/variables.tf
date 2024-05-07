@@ -5,12 +5,15 @@ variable "environment" {
 
 variable "owner" {
   type = string
-  default = "matias"
+  default = "kognitos"
 }
 
-variable "lambda_role_name" {
+variable "image_uri" {
   type = string
-  default = "mati_test_lambda_role"
+}
+
+variable "book_name" {
+  type = string
 }
 
 variable "book_version" {

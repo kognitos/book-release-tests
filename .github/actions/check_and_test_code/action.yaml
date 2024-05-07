@@ -1,0 +1,24 @@
+name: "Check and Test Code"
+
+inputs:
+  CODE_ARTIFACT_TOKEN:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - uses: ./.github/actions/setup_python_environment
+    with:
+      CODE_ARTIFACT_TOKEN: ${{ inputs.CODE_ARTIFACT_TOKEN }}
+  - name: PyLint
+    shell: bash
+    run: |
+      python -m poetry run lint
+  - name: Type Check
+    shell: bash
+    run: |
+      python -m poetry run type-check
+  - name: Test
+    shell: bash
+    run: |
+      python -m poetry run tests

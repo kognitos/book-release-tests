@@ -7,7 +7,6 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "terraform-mati-tests"
     key    = "role_configuration.tfstate"
     region = "us-west-2"
   }
@@ -18,7 +17,7 @@ provider "aws" {
 }
 
 resource "aws_iam_role" "lambda_role" {
-  name = "mati_test_lambda_role"
+  name = "${var.book_name}_lambda_role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -37,7 +36,7 @@ EOF
 }
 
 resource "aws_iam_policy_attachment" "basic_lambda_policy_attachment" {
-  name       = "mati_test_lambda_role_policy_attachment"
+  name       = "${var.book_name}_lambda_role_policy_attachment"
   roles      = [aws_iam_role.lambda_role.name]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
