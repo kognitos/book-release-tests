@@ -30,10 +30,10 @@ jobs:
       id: setup_credentials
       with:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         AWS_ROLE_EXTERNAL_ID: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
-    - uses: ./.github/actions/git_lint
+    - uses: ./.github/actions/gitlint
     - uses: ./.github/actions/check_and_test_code
       with:
         CODE_ARTIFACT_TOKEN: ${{ steps.setup_credentials.outputs.CODE_ARTIFACT_TOKEN }}
