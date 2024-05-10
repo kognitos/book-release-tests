@@ -1,4 +1,4 @@
-name: CI
+name: Main Pipeline
 on:
   push:
     branches: [ main, test_changes ]
@@ -20,6 +20,8 @@ env:
 #     env: inherit
 
 jobs:
+  # TODO quiero probar que pasa si hago el configure credentials en otro job/workflow
+  # TODO quiero probar terraform outputs
   TestJob:
     runs-on: ubuntu-latest
     steps:

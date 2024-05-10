@@ -1,4 +1,4 @@
-name: Check and Test Code
+name: Semantic Release and Terraform Deploy
 
 on:
   workflow_call:
