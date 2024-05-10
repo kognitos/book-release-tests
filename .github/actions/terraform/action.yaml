@@ -28,6 +28,7 @@ env:
   BOOK_LAMBDA_SEMVER: "${{ inputs.MAJOR_VERSION }}_${{ inputs.MINOR_VERSION }}_${{ inputs.PATCH_VERSION }}"
   IMAGE_URI: "${{ inputs.DOCKER_REGISTRY }}/${{ inputs.PROJECT_NAME }}/book/${{ inputs.BOOK_NAME }}/${{ env.SEMVER }}"
 
+openweather/openweather_3.1.2.tfstate
 runs:
   using: "composite"
   steps:
