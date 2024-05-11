@@ -36,9 +36,9 @@ jobs:
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
       
     - run: |
-        echo "aws_access_key_id: ${{ steps.credentials.outputs.aws_access_key_id }}"
-        echo "aws_secret_access_key: ${{ steps.credentials.outputs.aws_secret_access_key }}"
-        echo "aws_session_token: ${{ steps.credentials.outputs.aws_session_token }}"
+        echo "aws_access_key_id: ${{ steps.credentials.outputs.AWS_ACCESS_KEY_ID }}"
+        echo "aws_secret_access_key: ${{ steps.credentials.outputs.AWS_SECRET_ACCESS_KEY }}"
+        echo "aws_session_token: ${{ steps.credentials.outputs.AWS_SESSION_TOKEN }}"
         echo --------------------------------------------------------------------
         echo "aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}"
         echo "aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}"
