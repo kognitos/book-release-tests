@@ -13,8 +13,7 @@ env:
 
 jobs:
   # TODO quiero probar que pasa si hago el configure credentials en otro job/workflow
-  # TODO quiero probar terraform outputs
-  # TODO quiero probar env en env
+  # TODO quiero probar env en env TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
   TestJob:
     runs-on: ubuntu-latest
     outputs:
@@ -28,13 +27,12 @@ jobs:
       id: credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        #output-credentials: true
         #role-skip-session-tagging: true
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-        #role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+        role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
       
     - run: |
         echo "aws_access_key_id: ${{ steps.credentials.outputs.AWS_ACCESS_KEY_ID }}"
