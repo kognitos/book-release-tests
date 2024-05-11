@@ -43,6 +43,11 @@ jobs:
       AWS_SESSION_TOKEN: ${{ needs.TestJob.outputs.aws_session_token }}
     steps:
     - uses: actions/checkout@v4
+
+    - run: echo ${{ needs.TestJob.outputs.aws_access_key_id }}
+    - run: echo ${{ needs.TestJob.outputs.aws_secret_access_key }}
+    - run: echo ${{ needs.TestJob.outputs.aws_session_token }}
+
     - uses: hashicorp/setup-terraform@v3
       with:
         terraform_wrapper: false
