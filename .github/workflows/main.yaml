@@ -34,6 +34,12 @@ jobs:
         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
         output-credentials: true
+      
+      - run: |
+          echo "aws_access_key_id: ${{ steps.credentials.outputs.aws_access_key_id }}"
+          echo "aws_secret_access_key: ${{ steps.credentials.outputs.aws_secret_access_key }}"
+          echo "aws_session_token: ${{ steps.credentials.outputs.aws_session_token }}"
+
   JobTwo:
     runs-on: ubuntu-latest
     needs: TestJob
