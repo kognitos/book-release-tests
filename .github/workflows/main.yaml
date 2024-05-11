@@ -37,6 +37,8 @@ jobs:
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
 
     - uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_wrapper: false
 
     - shell: bash
       run: terraform -chdir=./test_tf init
@@ -46,7 +48,7 @@ jobs:
       run: terraform -chdir=./test_tf apply -auto-approve
   
     - shell: bash
-      run: echo ${{ steps.apply.outputs.stdout }}
+      run: echo ${{ steps.apply.outputs.name }}
 
   # CheckAndTestCode:
   #   runs-on: ubuntu-latest
