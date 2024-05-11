@@ -48,9 +48,7 @@ jobs:
       run: terraform -chdir=./test_tf apply -auto-approve
   
     - shell: bash
-      run: |
-        output=$(terraform output name)
-        echo $output
+      run: echo $(terraform -chdir=./test_tf output name)
 
   # CheckAndTestCode:
   #   runs-on: ubuntu-latest
