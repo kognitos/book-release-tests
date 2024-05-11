@@ -28,17 +28,21 @@ jobs:
       id: credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
+        output-credentials: true
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
-        output-credentials: true
       
     - run: |
         echo "aws_access_key_id: ${{ steps.credentials.outputs.aws_access_key_id }}"
         echo "aws_secret_access_key: ${{ steps.credentials.outputs.aws_secret_access_key }}"
         echo "aws_session_token: ${{ steps.credentials.outputs.aws_session_token }}"
+        echo --------------------------------------------------------------------
+        echo "aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}"
+        echo "aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}"
+        echo "aws_session_token: ${{ env.AWS_SESSION_TOKEN }}"
 
   JobTwo:
     runs-on: ubuntu-latest
