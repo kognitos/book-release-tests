@@ -17,10 +17,15 @@ jobs:
   # TODO quiero probar env en env
   TestJob:
     runs-on: ubuntu-latest
+    outputs:
+      aws_access_key_id: ${{ steps.credentials.outputs.aws_access_key_id }}
+      aws_secret_access_key: ${{ steps.credentials.outputs.aws_secret_access_key }}
+      aws_session_token: ${{ steps.credentials.outputs.aws_session_token }}
     steps:
     - uses: actions/checkout@v4
 
     - name: Configure AWS Credentials
+      id: credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -28,8 +33,13 @@ jobs:
         aws-region: us-west-2
         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+        output-credentials: true
   JobTwo:
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ jobs.TestJob.outputs.aws_access_key_id }}
+      AWS_SECRET_ACCESS_KEY: ${{ jobs.TestJob.outputs.aws_secret_access_key }}
+      AWS_SESSION_TOKEN: ${{ jobs.TestJob.outputs.aws_session_token }}
     steps:
     - uses: actions/checkout@v4
     - uses: hashicorp/setup-terraform@v3
