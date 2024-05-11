@@ -10,18 +10,11 @@ env:
   BOOK_NAME: "my_book"  # To be set by cookiecutter
   DOCKER_REGISTRY: "719468614044.dkr.ecr.us-west-2.amazonaws.com" # To be set by cookiecutter???
 
-# jobs:
-#   call-reusable-workflow-check-in-local-repo:
-#     uses: ./.github/workflows/rw-check-and-test-code.yaml
-#     secrets: inherit
-#   call-reusable-workflow-release-in-local-repo:
-#     uses: ./.github/workflows/rw-semantic-release.yaml
-#     secrets: inherit
-#     env: inherit
 
 jobs:
   # TODO quiero probar que pasa si hago el configure credentials en otro job/workflow
   # TODO quiero probar terraform outputs
+  # TODO quiero probar env en env
   TestJob:
     runs-on: ubuntu-latest
     steps:
@@ -38,6 +31,7 @@ jobs:
   JobTwo:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - uses: hashicorp/setup-terraform@v3
       with:
         terraform_wrapper: false
