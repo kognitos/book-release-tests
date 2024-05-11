@@ -35,7 +35,9 @@ jobs:
         aws-region: us-west-2
         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
-
+  JobTwo:
+    runs-on: ubuntu-latest
+    steps:
     - uses: hashicorp/setup-terraform@v3
       with:
         terraform_wrapper: false
@@ -48,7 +50,10 @@ jobs:
       run: terraform -chdir=./test_tf apply -auto-approve
   
     - shell: bash
-      run: echo $(terraform -chdir=./test_tf output name)
+      id: output
+      run: echo "lambda_name=$(terraform -chdir=./test_tf output name)" >> $GITHUB_OUTPUT
+
+    #${{ steps.output.outputs.lambda_name }}
 
   # CheckAndTestCode:
   #   runs-on: ubuntu-latest

@@ -21,6 +21,10 @@ resource "aws_s3_bucket" "example" {
   bucket = "my-mati-tf-test-bucket"
 }
 
-output "name" {
+output "lambda_name" {
   value = aws_s3_bucket.example.bucket
+}
+
+output "lambda_arn" {
+  value = aws_s3_bucket.example.arn
 }
