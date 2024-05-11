@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: TestJob
     env:
-      AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
       #AWS_SECRET_ACCESS_KEY: ${{ needs.TestJob.outputs.aws_secret_access_key }}
       AWS_SESSION_TOKEN: ${{ needs.TestJob.outputs.aws_session_token }}
     steps:
