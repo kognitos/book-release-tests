@@ -48,7 +48,7 @@ jobs:
       run: terraform -chdir=./test_tf apply -auto-approve
   
     - shell: bash
-      run: echo ${{ steps.apply.outputs.name }}
+      run: echo ${{ steps.apply.outputs.stdout }}
 
   # CheckAndTestCode:
   #   runs-on: ubuntu-latest
