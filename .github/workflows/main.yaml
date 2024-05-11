@@ -40,8 +40,8 @@ jobs:
       with:
         terraform_wrapper: false
 
-    # - shell: bash
-    #   run: terraform -chdir=./test_tf init
+    - shell: bash
+      run: terraform -chdir=./test_tf init
 
     - shell: bash
       id: apply
