@@ -20,3 +20,7 @@ provider "aws" {
 resource "aws_s3_bucket" "example" {
   bucket = "my-mati-tf-test-bucket"
 }
+
+output "name" {
+  value = aws_s3_bucket.example.bucket
+}

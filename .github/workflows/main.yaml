@@ -33,7 +33,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
-        role-to-assume: "arn:aws:iam::719468614044:role/mati_test_pipeline_role"  #${{ secrets.AWS_ROLE_TO_ASSUME }}
+        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
 
     - uses: hashicorp/setup-terraform@v3
@@ -42,8 +42,12 @@ jobs:
       run: terraform -chdir=./test_tf init
 
     - shell: bash
+      id: apply
       run: terraform -chdir=./test_tf apply -auto-approve
   
+    - shell: bash
+      run: echo ${{ steps.apply.outputs.stdout }}
+
   # CheckAndTestCode:
   #   runs-on: ubuntu-latest
   #   steps:
