@@ -1,14 +1,14 @@
 name: "Setup Credentials"
 
-inputs:
-  AWS_ACCESS_KEY_ID:
-    required: true
-  AWS_SECRET_ACCESS_KEY:
-    required: true
-  AWS_ROLE_TO_ASSUME:
-    required: true
-  AWS_ROLE_EXTERNAL_ID:
-    required: true
+# inputs:
+#   AWS_ACCESS_KEY_ID:
+#     required: true
+#   AWS_SECRET_ACCESS_KEY:
+#     required: true
+#   AWS_ROLE_TO_ASSUME:
+#     required: true
+#   AWS_ROLE_EXTERNAL_ID:
+#     required: true
 
 outputs:
   CODE_ARTIFACT_TOKEN: ${{ steps.codeartifact.outputs.token }}
@@ -21,11 +21,11 @@ runs:
   - name: Configure AWS Credentials
     uses: aws-actions/configure-aws-credentials@v4
     with:
-      aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
-      aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       aws-region: us-west-2
-      role-to-assume: ${{ inputs.AWS_ROLE_TO_ASSUME }}
-      role-external-id: ${{ inputs.AWS_ROLE_EXTERNAL_ID }}
+      role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+      role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
       role-skip-session-tagging: true
   - name: Login to Amazon ECR
     id: login-ecr
@@ -36,3 +36,43 @@ runs:
     run: |
       TOKEN=$(aws codeartifact get-authorization-token --domain-owner 719468614044 --domain kognitos --query 'authorizationToken' --output text)
       echo "::set-output name=token::$TOKEN"
+
+
+# name: "Setup Credentials"
+
+# inputs:
+#   AWS_ACCESS_KEY_ID:
+#     required: true
+#   AWS_SECRET_ACCESS_KEY:
+#     required: true
+#   AWS_ROLE_TO_ASSUME:
+#     required: true
+#   AWS_ROLE_EXTERNAL_ID:
+#     required: true
+
+# outputs:
+#   CODE_ARTIFACT_TOKEN: ${{ steps.codeartifact.outputs.token }}
+#   DOCKER_REGISTRY_USER: ${{ steps.login-ecr.outputs.docker_username_719468614044_dkr_ecr_us_west_2_amazonaws_com }}
+#   DOCKER_REGISTRY_PASSWORD: ${{ steps.login-ecr.outputs.docker_password_719468614044_dkr_ecr_us_west_2_amazonaws_com }}
+
+# runs:
+#   using: "composite"
+#   steps:
+#   - name: Configure AWS Credentials
+#     uses: aws-actions/configure-aws-credentials@v4
+#     with:
+#       aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+#       aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+#       aws-region: us-west-2
+#       role-to-assume: ${{ inputs.AWS_ROLE_TO_ASSUME }}
+#       role-external-id: ${{ inputs.AWS_ROLE_EXTERNAL_ID }}
+#       role-skip-session-tagging: true
+#   - name: Login to Amazon ECR
+#     id: login-ecr
+#     uses: aws-actions/amazon-ecr-login@v2
+#   - name: Login to AWS CodeArtifact
+#     id: codeartifact
+#     shell: bash
+#     run: |
+#       TOKEN=$(aws codeartifact get-authorization-token --domain-owner 719468614044 --domain kognitos --query 'authorizationToken' --output text)
+#       echo "::set-output name=token::$TOKEN"

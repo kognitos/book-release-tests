@@ -49,11 +49,13 @@ jobs:
     #   AWS_SESSION_TOKEN: ${{ needs.TestJob.outputs.aws_session_token }}
     steps:
     - uses: actions/checkout@v4
+    - uses: ./.github/actions/setup_credentials
+      id: creds
 
     - run: |
-        echo ${{ env.AWS_ACCESS_KEY_ID }}
-        echo ${{ env.AWS_SECRET_ACCESS_KEY }}
-        echo ${{ env.AWS_SESSION_TOKEN }}
+        echo ${{ steps.creds.outputs.CODE_ARTIFACT_TOKEN }}
+        echo ${{ steps.creds.outputs.DOCKER_REGISTRY_USER }}
+        echo ${{ steps.creds.outputs.DOCKER_REGISTRY_PASSWORD }}
 
     - uses: hashicorp/setup-terraform@v3
       with:
