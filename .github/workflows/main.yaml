@@ -16,10 +16,10 @@ jobs:
   # TODO quiero probar env en env TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
   TestJob:
     runs-on: ubuntu-latest
-    outputs:
-      aws_access_key_id: ${{ steps.credentials.outputs.aws-access-key-id }}
-      aws_secret_access_key: ${{ steps.credentials.outputs.aws-secret-access-key }}
-      aws_session_token: ${{ steps.credentials.outputs.aws-session-token }}
+    # outputs:
+    #   aws_access_key_id: ${{ steps.credentials.outputs.aws-access-key-id }}
+    #   aws_secret_access_key: ${{ steps.credentials.outputs.aws-secret-access-key }}
+    #   aws_session_token: ${{ steps.credentials.outputs.aws-session-token }}
     steps:
     - uses: actions/checkout@v4
 
@@ -34,6 +34,11 @@ jobs:
         aws-region: us-west-2
         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+    
+    - run: |
+        echo "AWS_ACCESS_KEY_ID=${{ steps.credentials.outputs.aws-access-key-id }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ steps.credentials.outputs.aws-secret-access-key }}" >> $GITHUB_ENV
+        echo "AWS_SESSION_TOKEN=${{ steps.credentials.outputs.aws-session-token }}" >> $GITHUB_ENV
 
   JobTwo:
     runs-on: ubuntu-latest
