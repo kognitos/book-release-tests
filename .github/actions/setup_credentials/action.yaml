@@ -37,9 +37,15 @@ runs:
     id: codeartifact
     shell: bash
     run: |
-      TOKEN=$(aws codeartifact get-authorization-token --domain-owner 719468614044 --domain kognitos --query 'authorizationToken' --output text)
-      echo "::set-output name=token::$TOKEN"
-
+      token=$(aws codeartifact get-authorization-token --domain-owner 719468614044 --domain kognitos --query 'authorizationToken' --output text)
+      echo "::add-mask::$token"
+      echo "token=$token" >> $GITHUB_OUTPUT
+  - shell: bash
+    run: |
+      echo "${{ 1234 }}"
+  - shell: bash
+    run: |
+      echo "${{ steps.login-ecr.outputs.docker_username_${{ 719468614044 }}_dkr_ecr_us_west_2_amazonaws_com }}"
 
 # name: "Setup Credentials"
 
