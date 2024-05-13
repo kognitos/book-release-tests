@@ -34,6 +34,11 @@ jobs:
         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
       
+    - run: |
+        echo ${{ steps.credentials.outputs.aws_access_key_id }}
+        echo ${{ steps.credentials.outputs.AWS_SECRET_ACCESS_KEY }}
+        echo ${{ steps.credentials.outputs.AWS_SESSION_TOKEN }}
+
     - shell: bash
       id: expose-credentials
       run: |
