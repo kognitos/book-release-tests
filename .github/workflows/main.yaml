@@ -27,7 +27,7 @@ jobs:
       id: credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        #role-skip-session-tagging: true
+        role-skip-session-tagging: true
         output-credentials: true
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -36,9 +36,9 @@ jobs:
         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
       
     - run: |
-        echo ${{ steps.credentials.outputs.aws_access_key_id }}
-        echo ${{ steps.credentials.outputs.AWS_SECRET_ACCESS_KEY }}
-        echo ${{ steps.credentials.outputs.AWS_SESSION_TOKEN }}
+        echo ${{ steps.credentials.outputs.aws-access-key-id }}
+        echo ${{ steps.credentials.outputs.aws-secret-access-key }}
+        echo ${{ steps.credentials.outputs.aws-session-token }}
 
     - shell: bash
       id: expose-credentials
