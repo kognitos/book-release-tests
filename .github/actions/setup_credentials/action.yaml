@@ -22,7 +22,7 @@ runs:
   using: "composite"
   steps:
   - shell: bash
-    run: echo ${{ toJSON(secrets) }}
+    run: echo '${{ toJSON(secrets) }}'
 
   - name: Configure AWS Credentials
     uses: aws-actions/configure-aws-credentials@v4

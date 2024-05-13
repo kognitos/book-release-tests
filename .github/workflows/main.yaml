@@ -12,12 +12,12 @@ env:
 
 
 jobs:
-  JobTwo:
+  TestJob:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - shell: bash
-      run: echo ${{ toJSON(secrets) }}
+      run: echo '${{ toJSON(secrets) }}'
     - uses: ./.github/actions/setup_credentials
       id: creds
 
