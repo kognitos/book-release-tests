@@ -11,9 +11,12 @@ name: "Setup Credentials"
 #     required: true
 
 outputs:
-  CODE_ARTIFACT_TOKEN: ${{ steps.codeartifact.outputs.token }}
-  DOCKER_REGISTRY_USER: ${{ steps.login-ecr.outputs.docker_username_719468614044_dkr_ecr_us_west_2_amazonaws_com }}
-  DOCKER_REGISTRY_PASSWORD: ${{ steps.login-ecr.outputs.docker_password_719468614044_dkr_ecr_us_west_2_amazonaws_com }}
+  CODE_ARTIFACT_TOKEN:
+    value: ${{ steps.codeartifact.outputs.token }}
+  DOCKER_REGISTRY_USER:
+    value: ${{ steps.login-ecr.outputs.docker_username_719468614044_dkr_ecr_us_west_2_amazonaws_com }}
+  DOCKER_REGISTRY_PASSWORD:
+    value: ${{ steps.login-ecr.outputs.docker_password_719468614044_dkr_ecr_us_west_2_amazonaws_com }}
 
 runs:
   using: "composite"
