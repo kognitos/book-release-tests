@@ -47,7 +47,6 @@ def output(data):
         flat.update(val)
 
     output_file = os.getenv('GITHUB_OUTPUT')
-    print(f"output file: {output_file}")
     with open(output_file, "a") as out:
         for k, v in flat.items():
             if not isinstance(k, str):
