@@ -27,7 +27,7 @@ jobs:
         run: pip install pyyaml toml
       - shell: bash
         id: matrix
-        run: python ./.github/scripts/setup.py ${{ inputs.CONFIG_FILE_PATH }}
+        run: python ./.github/scripts/setup.py ./book-config.yaml #${{ inputs.CONFIG_FILE_PATH }}
 
   output:
     runs-on: ubuntu-latest
