@@ -16,7 +16,8 @@ runs:
     - uses: actions/setup-python@v5
       with:
         python-version: 3.12
-    - run: pip install yaml toml
+    - shell: bash
+      run: pip install yaml toml
     - shell: bash
       id: output
       run: python ./.github/actions/setup_local_variables/setup.py ${{ inputs.CONFIG_FILE_PATH }}
