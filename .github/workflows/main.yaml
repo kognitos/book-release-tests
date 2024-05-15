@@ -14,9 +14,8 @@ on:
 jobs:
   TestJob:
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: ./.github/actions/setup_local_variables
+    uses: ./.github/workflows/rw-setup-configuration-variables.yaml
+
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
     # - uses: ./.github/actions/setup_credentials
