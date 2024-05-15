@@ -19,5 +19,9 @@ runs:
     - shell: bash
       run: pip install pyyaml toml
     - shell: bash
+      run: |
+        echo $(pwd)
+        echo $(ls)
+    - shell: bash
       id: output
       run: python ./.github/actions/setup_local_variables/setup.py ${{ inputs.CONFIG_FILE_PATH }}
