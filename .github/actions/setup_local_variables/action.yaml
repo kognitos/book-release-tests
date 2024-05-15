@@ -15,6 +15,4 @@ runs:
   steps:
     - shell: python
       id: output
-      run: "./.github/actions/setup_local_variables/setup.py"
-      with:
-        CONFIG_FILE_PATH: ${{ inputs.CONFIG_FILE_PATH }}
+      run: "./.github/actions/setup_local_variables/setup.py ${{ inputs.CONFIG_FILE_PATH }}"
