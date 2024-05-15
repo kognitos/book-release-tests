@@ -1,25 +1,33 @@
 name: "Setup Local Variables"
 
-inputs:
-  CONFIG_FILE_PATH:
-    required: false
-    type: string
-    default: "./book-config.yaml"
+on:
+  workflow_dispatch:
+    inputs:
+      CONFIG_FILE_PATH:
+        required: false
+        type: string
+        default: "./book-config.yaml"
 
-outputs:
-  lambda_name:
-    value: "jajaja"
+    outputs:
+      lambda_name:
+        value: "jajaja"
 
-runs:
-  using: "composite"
-  steps:
-    - uses: actions/setup-python@v5
-      with:
-        python-version: 3.12
-    - shell: bash
-      run: pip install pyyaml toml
-    - shell: bash
-      id: output
-      run: python ./.github/actions/setup_local_variables/setup.py ${{ inputs.CONFIG_FILE_PATH }}
-    - shell: bash
-      run: echo "${{ toJSON(steps.output.outputs) }}"
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - shell: bash
+        run: pip install pyyaml toml
+      - shell: bash
+        id: matrix
+        run: python ./.github/actions/setup_local_variables/setup.py ${{ inputs.CONFIG_FILE_PATH }}
+
+
+      strategy:
+      matrix:
+        NAMES: ${{ fromJson(needs.pre-check.outputs.NAMES) }}
