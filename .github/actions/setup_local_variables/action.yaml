@@ -28,6 +28,4 @@ jobs:
         run: python ./.github/actions/setup_local_variables/setup.py ${{ inputs.CONFIG_FILE_PATH }}
 
 
-      strategy:
-      matrix:
-        NAMES: ${{ fromJson(needs.pre-check.outputs.NAMES) }}
+
