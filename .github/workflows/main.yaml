@@ -12,60 +12,67 @@ on:
 
 
 jobs:
-  # TestJob:
-  #   uses: ./.github/workflows/rw-setup-configuration-variables.yaml
-  setup:
+  job1:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.matrix.outputs.list }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
-      - shell: bash
-        run: pip install pyyaml toml
-      - shell: bash
-        id: matrix
-        run: python ./.github/scripts/setup.py ./book-config.yaml #${{ inputs.CONFIG_FILE_PATH }}
-
-  output:
-    runs-on: ubuntu-latest
-    needs: setup
     strategy:
       matrix:
-        value: ["one", "two"] #${{ fromJSON(needs.setup.outputs.matrix) }}
+        option1: ["value1", "value2"]
     outputs:
-      result: ${{ matrix.value }}
+      ${{ matrix.option1 }}-output: ${{ steps.step1.outputs.test }}
     steps:
-    - shell: bash
-      id: matrix_output
-      run: |
-        echo "Matrixval=\"${{ matrix.value }}\"" >> $GITHUB_OUTPUT
-        echo "SECONDENV=123123123" >> $GITHUB_ENV
-        echo "${{ toJSON(env) }}"
-        echo "${{ toJSON(job) }}"
-        echo "${{ toJSON(steps) }}"
-        echo "${{ toJSON(runner) }}"
-        echo "${{ toJSON(secrets) }}"
-        echo "${{ toJSON(strategy) }}"
-        echo "${{ toJSON(matrix) }}"
-        echo "${{ toJSON(needs) }}"
-        echo "${{ toJSON(inputs) }}"
-  Job2:
-    runs-on: ubuntu-latest
-    needs: output
-    steps:
-    - run: |
-        echo "${{ toJSON(env) }}"
-        echo "${{ toJSON(job) }}"
-        echo "${{ toJSON(steps) }}"
-        echo "${{ toJSON(runner) }}"
-        echo "${{ toJSON(secrets) }}"
-        echo "${{ toJSON(strategy) }}"
-        echo "${{ toJSON(matrix) }}"
-        echo "${{ toJSON(needs) }}"
-        echo "${{ toJSON(inputs) }}"
+      - id: step1
+        run: echo "test=hello" >> "$GITHUB_OUTPUT"
+  # TestJob:
+  #   uses: ./.github/workflows/rw-setup-configuration-variables.yaml
+  # setup:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     matrix: ${{ steps.matrix.outputs.list }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: 3.12
+  #     - shell: bash
+  #       run: pip install pyyaml toml
+  #     - shell: bash
+  #       id: matrix
+  #       run: python ./.github/scripts/setup.py ./book-config.yaml #${{ inputs.CONFIG_FILE_PATH }}
+
+  # output:
+  #   runs-on: ubuntu-latest
+  #   needs: setup
+  #   strategy:
+  #     matrix:
+  #       value: ["one", "two"] #${{ fromJSON(needs.setup.outputs.matrix) }}
+  #   outputs:
+  #     result: ${{ matrix.value }}
+  #   steps:
+  #   - shell: bash
+  #     id: matrix_output
+  #     run: |
+  #       echo "Matrixval=\"${{ matrix.value }}\"" >> $GITHUB_OUTPUT
+  #       echo "SECONDENV=123123123" >> $GITHUB_ENV
+  #       echo "${{ toJSON(job) }}"
+  #       echo "${{ toJSON(runner) }}"
+  #       echo "${{ toJSON(secrets) }}"
+  #       echo "${{ toJSON(strategy) }}"
+  #       echo "${{ toJSON(matrix) }}"
+  #       echo "${{ toJSON(needs) }}"
+  # Job2:
+  #   runs-on: ubuntu-latest
+  #   needs: output
+  #   steps:
+  #   - run: |
+  #       echo "${{ toJSON(env) }}"
+  #       echo "${{ toJSON(job) }}"
+  #       echo "${{ toJSON(steps) }}"
+  #       echo "${{ toJSON(runner) }}"
+  #       echo "${{ toJSON(secrets) }}"
+  #       echo "${{ toJSON(strategy) }}"
+  #       echo "${{ toJSON(matrix) }}"
+  #       echo "${{ toJSON(needs) }}"
+  #       echo "${{ toJSON(inputs) }}"
 
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
