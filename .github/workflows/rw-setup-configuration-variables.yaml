@@ -8,16 +8,11 @@ on:
         type: string
         default: "./book-config.yaml"
 
-    outputs: 
-      out:
-        value: ${{ jobs.setup.outputs }}
-
 jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ toJSON(steps.matrix.outputs) }}
-      output2: "jajaj"
+      matrix: ${{ steps.matrix.outputs.list }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -29,16 +24,16 @@ jobs:
         id: matrix
         run: python ./.github/scripts/setup.py ${{ inputs.CONFIG_FILE_PATH }}
 
-  # output:
-  #   runs-on: ubuntu-latest
-  #   needs: setup
-  #   strategy:
-  #     matrix:
-  #       value: ${{ fromJSON(needs.setup.outputs.matrix) }}
-  #   steps:
-  #   - shell: bash
-  #     run: |
-  #         echo "${{ matrix.value }}"
+  output:
+    runs-on: ubuntu-latest
+    needs: setup
+    strategy:
+      matrix:
+        value: ${{ fromJSON(needs.setup.outputs.matrix) }}
+    steps:
+    - shell: bash
+      run: |
+          echo "${{ matrix.value }}"
 
 
 

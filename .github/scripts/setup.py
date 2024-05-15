@@ -48,11 +48,16 @@ def output(data):
 
     output_file = os.getenv('GITHUB_OUTPUT')
     with open(output_file, "a") as out:
+        variables_list = '['
         for k, v in flat.items():
             if not isinstance(k, str):
                 raise ValueError("Keys must be strings")
-            line = f"{k}={v}"
-            out.write(f"{line}\n")
+            variables_list += f'"{k}={v}", '
+
+        if variables_list.endswith(", "):
+            variables_list = variables_list[:-2]
+        variables_list += ']'
+        out.write(f"list={variables_list}\n")
 
 
 output(interpolate_values(read_file(sys.argv[1])))
