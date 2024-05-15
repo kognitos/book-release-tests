@@ -1,0 +1,7 @@
+book:
+  BOOK_NAME: "openweather"  # This is set by cookiecutter
+deployment:
+  AWS_ACCOUNT_ID: "719468614044"
+  AWS_REGION: "us-west-2"
+  DOCKER_REGISTRY: "{AWS_ACCOUNT_ID}.dkr.ecr.{AWS_REGION}.amazonaws.com"
+  TERRAFORM_BACKEND_BUCKET_NAME: "bdk-terraform-backend"
