@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - shell: python
-      runs: ./.github/actions/setup_local_variables
+      run: ./.github/actions/setup_local_variables
     # - uses: actions/checkout@v4
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
