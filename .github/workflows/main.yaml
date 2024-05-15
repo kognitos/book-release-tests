@@ -48,9 +48,9 @@ jobs:
     needs: output
     steps:
     - run: |
-        echo "${{ toJSON(needs.TestJob.outputs) }}"
+        echo "${{ toJSON(needs.output.outputs) }}"
         echo "========================================"
-        echo "${{ toJSON(needs.TestJob) }}"
+        echo "${{ toJSON(needs.output) }}"
 
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
