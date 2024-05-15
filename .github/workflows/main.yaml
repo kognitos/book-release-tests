@@ -49,6 +49,7 @@ jobs:
     steps:
     - run: |
         echo "${{ toJSON(needs.output) }}"
+        echo "${{ needs.output.steps.matrix_output.outputs.Matrixval }}"
 
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
