@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ toJSON(steps.matrix.outputs) }}
+      output2: "jajaj"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

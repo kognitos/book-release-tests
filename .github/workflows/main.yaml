@@ -14,6 +14,12 @@ on:
 jobs:
   TestJob:
     uses: ./.github/workflows/rw-setup-configuration-variables.yaml
+  Job2:
+    runs-on: ubuntu-latest
+    needs: TestJob
+    steps:
+    - run: |
+        echo "${{ needs.TestJob.outputs }}"
 
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
