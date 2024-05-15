@@ -7,12 +7,21 @@ on:
         required: false
         type: string
         default: "./book-config.yaml"
-
-env:
-  TEST: "TESTVAL"
+    
+    outputs:
+      BOOK_NAME:
+        value: ${{ steps.vars.outputs.BOOK_NAME }}
+      AWS_ACCOUNT_ID:
+        value: ${{ steps.vars.outputs.AWS_ACCOUNT_ID }}
+      AWS_REGION:
+        value: ${{ steps.vars.outputs.AWS_REGION }}
+      DOCKER_REGISTRY:
+        value: ${{ steps.vars.outputs.DOCKER_REGISTRY }}
+      TERRAFORM_BACKEND_BUCKET_NAME:
+        value: ${{ steps.vars.outputs.TERRAFORM_BACKEND_BUCKET_NAME }}
 
 jobs:
-  setup:
+  LoadVariables:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.matrix.outputs.list }}
@@ -24,24 +33,8 @@ jobs:
       - shell: bash
         run: pip install pyyaml toml
       - shell: bash
-        id: matrix
+        id: vars
         run: python ./.github/scripts/setup.py ${{ inputs.CONFIG_FILE_PATH }}
-
-  output:
-    runs-on: ubuntu-latest
-    needs: setup
-    strategy:
-      matrix:
-        value: ['linux', 'windows','macos']
-        #${{ fromJSON(needs.setup.outputs.matrix) }}
-    outputs:
-      ${{ steps.matrix_output.Matrixval }}_result: ${{ steps.matrix_output.outputs.Matrixval }}
-    steps:
-    - shell: bash
-      id: matrix_output
-      run: |
-          echo "Matrixval=\"${{ matrix.value }}\"" >> $GITHUB_OUTPUT
-          echo "SECONDENV=123123123" >> $GITHUB_ENV
 
 
 

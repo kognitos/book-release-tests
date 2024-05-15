@@ -12,22 +12,15 @@ on:
 
 
 jobs:
-  # TestJob:
-  #   uses: ./.github/workflows/rw-setup-configuration-variables.yaml
+  TestJob:
+    uses: ./.github/workflows/rw-setup-configuration-variables.yaml
   setup:
     runs-on: ubuntu-latest
-    outputs:
-      ${{ steps.matrix.outputs }}
+    needs: TestJob
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
       - shell: bash
-        run: pip install pyyaml toml
-      - shell: bash
-        id: matrix
-        run: python ./.github/scripts/setup.py ./book-config.yaml #${{ inputs.CONFIG_FILE_PATH }}
+        run: |
+          echo "${{ toJSON(needs) }}"
 
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
