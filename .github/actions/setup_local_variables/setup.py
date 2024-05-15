@@ -53,8 +53,7 @@ def output(data):
             if not isinstance(k, str):
                 raise ValueError("Keys must be strings")
             line = f"{k}={v}"
-            #out.write(f"{line}\n")
-            print(line)
+            out.write(f"{line}\n")
 
 
 output(interpolate_values(read_file(sys.argv[1])))
