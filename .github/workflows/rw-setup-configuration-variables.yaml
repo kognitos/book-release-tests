@@ -8,7 +8,8 @@ on:
         type: string
         default: "./book-config.yaml"
 
-    outputs: ${{ jobs.setup.outputs }}
+    outputs: 
+      ${{ jobs.setup.outputs }}
 
 jobs:
   setup:
