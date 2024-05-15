@@ -28,12 +28,12 @@ jobs:
         id: matrix
         run: python ./.github/scripts/setup.py ${{ inputs.CONFIG_FILE_PATH }}
 
-    output:
-      runs-on: ubuntu-latest
-      needs: setup
-      steps:
-      - shell: bash
-        run: echo "${{ needs.setup.outputs.matrix }}"
+  output:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+    - shell: bash
+      run: echo "${{ needs.setup.outputs.matrix }}"
 
 
 
