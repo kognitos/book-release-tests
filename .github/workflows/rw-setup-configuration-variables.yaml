@@ -32,14 +32,15 @@ jobs:
     needs: setup
     strategy:
       matrix:
-        value: ${{ fromJSON(needs.setup.outputs.matrix) }}
+        value: ['linux', 'windows','macos']
+        #${{ fromJSON(needs.setup.outputs.matrix) }}
     outputs:
-      ${{ matrix.value }}_result: ${{ steps.matrix_output.outputs.JOB_STATUS }}
+      ${{ matrix.value }}_result: ${{ steps.matrix_output.outputs.Matrixval }}
     steps:
     - shell: bash
       id: matrix_output
       run: |
-          echo "Matrix.val=\"${{ matrix.value }}\"" >> $GITHUB_OUTPUT
+          echo "Matrixval=\"${{ matrix.value }}\"" >> $GITHUB_OUTPUT
           echo "SECONDENV=123123123" >> $GITHUB_ENV
 
 
