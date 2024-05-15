@@ -19,7 +19,9 @@ jobs:
     needs: TestJob
     steps:
     - run: |
-        echo "${{ needs.TestJob.outputs }}"
+        echo "${{ toJSON(needs.TestJob.outputs) }}"
+        echo "========================================"
+        echo "${{ toJSON(needs.TestJob.env) }}"
 
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
