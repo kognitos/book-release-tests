@@ -13,7 +13,6 @@ on:
 
 jobs:
   TestJob:
-    runs-on: ubuntu-latest
     uses: ./.github/workflows/rw-setup-configuration-variables.yaml
 
     # - shell: bash
