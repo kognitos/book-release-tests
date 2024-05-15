@@ -11,6 +11,11 @@ on:
 #   DOCKER_REGISTRY: "719468614044.dkr.ecr.us-west-2.amazonaws.com" # To be set by cookiecutter???
 
 
+#echo ${{ needs.build.outputs[format('c_ip{0}', matrix.index)] }}
+#For people wondering, this is also possible with secrets and vars.
+#${{ vars[format('{0}_CONTAINER_REGISTRY_DNS', env.PREFIX )] }}
+#DOCKER_REGISTRY_USER: ${{ steps.login-ecr.outputs['docker_username_719468614044_dkr_ecr_us_west_2_amazonaws_com'] }}
+
 jobs:
   TestJob:
     uses: ./.github/workflows/rw-setup-configuration-variables.yaml

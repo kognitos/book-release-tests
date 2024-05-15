@@ -1,5 +1,6 @@
 book:
   BOOK_NAME: "openweather"  # This is set by cookiecutter
+  BDK_RUNTIME_VERSION: 1.6.2
 deployment:
   AWS_ACCOUNT_ID: "719468614044"
   AWS_REGION: "us-west-2"
