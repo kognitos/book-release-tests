@@ -57,15 +57,15 @@ jobs:
     needs: output
     steps:
     - run: |
-      echo "${{ toJSON(env) }}"
-      echo "${{ toJSON(job) }}"
-      echo "${{ toJSON(steps) }}"
-      echo "${{ toJSON(runner) }}"
-      echo "${{ toJSON(secrets) }}"
-      echo "${{ toJSON(strategy) }}"
-      echo "${{ toJSON(matrix) }}"
-      echo "${{ toJSON(needs) }}"
-      echo "${{ toJSON(inputs) }}"
+        echo "${{ toJSON(env) }}"
+        echo "${{ toJSON(job) }}"
+        echo "${{ toJSON(steps) }}"
+        echo "${{ toJSON(runner) }}"
+        echo "${{ toJSON(secrets) }}"
+        echo "${{ toJSON(strategy) }}"
+        echo "${{ toJSON(matrix) }}"
+        echo "${{ toJSON(needs) }}"
+        echo "${{ toJSON(inputs) }}"
 
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
