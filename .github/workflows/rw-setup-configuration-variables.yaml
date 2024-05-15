@@ -1,7 +1,7 @@
 name: "Setup Configuration Variables"
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       CONFIG_FILE_PATH:
         required: false
