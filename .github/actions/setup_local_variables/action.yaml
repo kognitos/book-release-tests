@@ -1,0 +1,20 @@
+name: "Setup Local Variables"
+
+inputs:
+  CONFIG_FILE_PATH:
+    required: false
+    type: string
+    default: "./book-config.yaml"
+
+outputs:
+  lambda_name:
+    value: "jajaja"
+
+runs:
+  using: "composite"
+  steps:
+    - shell: python
+      id: output
+      run: "./.github/actions/setup_local_variables/setup.py"
+      with:
+        CONFIG_FILE_PATH: ${{ inputs.CONFIG_FILE_PATH }}

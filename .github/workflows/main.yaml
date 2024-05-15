@@ -5,48 +5,49 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  PROJECT_NAME: "kognitos"
-  BOOK_NAME: "my_book"  # To be set by cookiecutter
-  DOCKER_REGISTRY: "719468614044.dkr.ecr.us-west-2.amazonaws.com" # To be set by cookiecutter???
+# env:
+#   PROJECT_NAME: "kognitos"
+#   BOOK_NAME: "my_book"  # To be set by cookiecutter
+#   DOCKER_REGISTRY: "719468614044.dkr.ecr.us-west-2.amazonaws.com" # To be set by cookiecutter???
 
 
 jobs:
   TestJob:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - shell: bash
-      run: echo '${{ toJSON(secrets) }}'
-    - uses: ./.github/actions/setup_credentials
-      id: creds
-      with:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-        AWS_ROLE_EXTERNAL_ID: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+    - shell: python
+      runs: ./.github/actions/setup_local_variables
+    # - uses: actions/checkout@v4
+    # - shell: bash
+    #   run: echo '${{ toJSON(secrets) }}'
+    # - uses: ./.github/actions/setup_credentials
+    #   id: creds
+    #   with:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+    #     AWS_ROLE_EXTERNAL_ID: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
 
-    - run: |
-        echo ${{ steps.creds.outputs.CODE_ARTIFACT_TOKEN }}
-        echo ${{ steps.creds.outputs.DOCKER_REGISTRY_USER }}
-        echo ${{ steps.creds.outputs.DOCKER_REGISTRY_PASSWORD }}
+    # - run: |
+    #     echo ${{ steps.creds.outputs.CODE_ARTIFACT_TOKEN }}
+    #     echo ${{ steps.creds.outputs.DOCKER_REGISTRY_USER }}
+    #     echo ${{ steps.creds.outputs.DOCKER_REGISTRY_PASSWORD }}
 
-    - uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_wrapper: false
+    # - uses: hashicorp/setup-terraform@v3
+    #   with:
+    #     terraform_wrapper: false
 
-    - shell: bash
-      run: terraform -chdir=./test_tf init
+    # - shell: bash
+    #   run: terraform -chdir=./test_tf init
 
-    - shell: bash
-      id: apply
-      run: terraform -chdir=./test_tf apply -auto-approve
+    # - shell: bash
+    #   id: apply
+    #   run: terraform -chdir=./test_tf apply -auto-approve
   
-    - shell: bash
-      id: output
-      run: echo "lambda_name=$(terraform -chdir=./test_tf output name)" >> $GITHUB_OUTPUT
+    # - shell: bash
+    #   id: output
+    #   run: echo "lambda_name=$(terraform -chdir=./test_tf output name)" >> $GITHUB_OUTPUT
 
-    #${{ steps.output.outputs.lambda_name }}
 
   # CheckAndTestCode:
   #   runs-on: ubuntu-latest
