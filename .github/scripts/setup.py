@@ -52,12 +52,14 @@ def output(data):
         for k, v in flat.items():
             if not isinstance(k, str):
                 raise ValueError("Keys must be strings")
-            variables_list += f'"{k}={v}", '
+            variable = f"{k}={v}"
+            out.write(f"{variable}\n")
+            variables_list += f'"{variable}", '
 
         if variables_list.endswith(", "):
             variables_list = variables_list[:-2]
         variables_list += ']'
-        out.write(f"list={variables_list}\n")
+        #out.write(f"list={variables_list}\n")
 
 
 output(interpolate_values(read_file(sys.argv[1])))
