@@ -17,8 +17,7 @@ runs:
       with:
         python-version: 3.12
     - shell: bash
-      run: |
-        pip install pyyaml toml
+      run: pip install pyyaml toml
     - shell: bash
       id: output
       run: python ./.github/actions/setup_local_variables/setup.py ${{ inputs.CONFIG_FILE_PATH }}

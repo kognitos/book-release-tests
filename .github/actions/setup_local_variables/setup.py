@@ -57,5 +57,4 @@ def output(data):
             print(line)
 
 
-print(f"argv: {sys.argv}")
-output(interpolate_values(read_file('config.yaml')))
+output(interpolate_values(read_file(sys.argv[1])))
