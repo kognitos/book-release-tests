@@ -9,7 +9,8 @@ on:
         default: "./book-config.yaml"
 
     outputs: 
-      out: ${{ jobs.setup.outputs }}
+      out:
+        value: ${{ jobs.setup.outputs }}
 
 jobs:
   setup:
