@@ -41,7 +41,7 @@ def read_file(path):
 
 def output(data):
     flat = {}
-    for _, val in data.items():
+    for val in data.values():
         if not isinstance(val, dict):
             raise ValueError("Can't have data outside a section")
         flat.update(val)
@@ -49,7 +49,7 @@ def output(data):
     output_file = os.getenv('GITHUB_OUTPUT')
     print(f"output file: {output_file}")
     with open(output_file, "a") as out:
-        for k, v in flat:
+        for k, v in flat.items():
             if not isinstance(k, str):
                 raise ValueError("Keys must be strings")
             line = f"{k}={v}"
