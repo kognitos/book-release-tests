@@ -21,7 +21,7 @@ jobs:
     - run: |
         echo "${{ toJSON(needs.TestJob.outputs) }}"
         echo "========================================"
-        echo "${{ toJSON(needs.TestJob.env) }}"
+        echo "${{ toJSON(needs.TestJob) }}"
 
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
