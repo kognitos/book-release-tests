@@ -10,21 +10,25 @@ on:
     
     outputs:
       BOOK_NAME:
-        value: ${{ steps.vars.outputs.BOOK_NAME }}
+        value: ${{ jobs.LoadVariables.outputs.BOOK_NAME }}
       AWS_ACCOUNT_ID:
-        value: ${{ steps.vars.outputs.AWS_ACCOUNT_ID }}
+        value: ${{ jobs.LoadVariables.outputs.AWS_ACCOUNT_ID }}
       AWS_REGION:
-        value: ${{ steps.vars.outputs.AWS_REGION }}
+        value: ${{ jobs.LoadVariables.outputs.AWS_REGION }}
       DOCKER_REGISTRY:
-        value: ${{ steps.vars.outputs.DOCKER_REGISTRY }}
+        value: ${{ jobs.LoadVariables.outputs.DOCKER_REGISTRY }}
       TERRAFORM_BACKEND_BUCKET_NAME:
-        value: ${{ steps.vars.outputs.TERRAFORM_BACKEND_BUCKET_NAME }}
+        value: ${{ jobs.LoadVariables.outputs.TERRAFORM_BACKEND_BUCKET_NAME }}
 
 jobs:
   LoadVariables:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.matrix.outputs.list }}
+      BOOK_NAME: ${{ steps.vars.outputs.BOOK_NAME }}
+      AWS_ACCOUNT_ID: ${{ steps.vars.outputs.AWS_ACCOUNT_ID }}
+      AWS_REGION: ${{ steps.vars.outputs.AWS_REGION }}
+      DOCKER_REGISTRY: ${{ steps.vars.outputs.DOCKER_REGISTRY }}
+      TERRAFORM_BACKEND_BUCKET_NAME: ${{ steps.vars.outputs.TERRAFORM_BACKEND_BUCKET_NAME }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
