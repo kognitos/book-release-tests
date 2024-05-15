@@ -36,7 +36,7 @@ jobs:
       matrix:
         value: ${{ fromJSON(needs.setup.outputs.matrix) }}
     outputs:
-      ${{ steps.matrix_output.Matrixval }}_result: ${{ steps.matrix_output.outputs.Matrixval }}
+      ${{ matrix.value }}_result: ${{ steps.matrix_output.outputs.Matrixval }}
     steps:
     - shell: bash
       id: matrix_output
