@@ -32,11 +32,11 @@ runs:
   using: "composite"
   steps:
   - shell: bash
-      id: format_region
-      run: |
-        region=${{ inputs.AWS_REGION }}
-        formatted_region=$(echo "$region" | tr '-' '_')
-        echo "region=$formatted_region" >> $GITHUB_OUTPUT
+    id: format_region
+    run: |
+      region=${{ inputs.AWS_REGION }}
+      formatted_region=$(echo "$region" | tr '-' '_')
+      echo "region=$formatted_region" >> $GITHUB_OUTPUT
   - uses: aws-actions/configure-aws-credentials@v4
     with:
       aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
