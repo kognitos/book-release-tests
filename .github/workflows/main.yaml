@@ -5,28 +5,24 @@ on:
   pull_request:
     branches: [ main ]
 
-# env:
-#   PROJECT_NAME: "kognitos"
-#   BOOK_NAME: "my_book"  # To be set by cookiecutter
-#   DOCKER_REGISTRY: "719468614044.dkr.ecr.us-west-2.amazonaws.com" # To be set by cookiecutter???
-
-
-#echo ${{ needs.build.outputs[format('c_ip{0}', matrix.index)] }}
-#For people wondering, this is also possible with secrets and vars.
-#${{ vars[format('{0}_CONTAINER_REGISTRY_DNS', env.PREFIX )] }}
-#DOCKER_REGISTRY_USER: ${{ steps.login-ecr.outputs['docker_username_719468614044_dkr_ecr_us_west_2_amazonaws_com'] }}
 
 jobs:
   TestJob:
-    uses: ./.github/workflows/rw-setup-configuration-variables.yaml
-  setup:
     runs-on: ubuntu-latest
-    needs: TestJob
     steps:
-      - shell: bash
-        run: |
-          echo "${{ toJSON(needs) }}"
+    - uses: actions/checkout@v4
+    - name: Setup Credentials
+      uses: ./.github/actions/setup_credentials
+      id: setup_credentials
+      with:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+        AWS_ROLE_EXTERNAL_ID: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+    - shell: bash
+      run: echo "${{ toJSON(steps.setup_credentials.outputs) }}"
 
+  
     # - shell: bash
     #   run: echo '${{ toJSON(secrets) }}'
     # - uses: ./.github/actions/setup_credentials
@@ -77,44 +73,3 @@ jobs:
   #       CODE_ARTIFACT_TOKEN: ${{ steps.setup_credentials.outputs.CODE_ARTIFACT_TOKEN }}
 
 # --------- Up to here I want to check on PRs
-
-  # SemanticRelease:
-  #   runs-on: ubuntu-latest
-  #   needs: CheckAndTestCode
-  #   steps:
-  #   - name: Checkout Source Code
-  #     uses: actions/checkout@v4
-  #   - name: Setup Credentials
-  #     uses: ./.github/actions/setup_credentials
-  #     id: setup_credentials
-  #     with:
-  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-  #       AWS_ROLE_EXTERNAL_ID: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
-  #   - name: Semantic Release Docker Image
-  #     id: semantic
-  #     uses: cycjimmy/semantic-release-action@v4
-  #     with:
-  #       branches: |
-  #         main
-  #       extra_plugins: |
-  #         @codedependant/semantic-release-docker
-  #     env:
-  #       CODE_ARTIFACT_TOKEN: ${{ steps.setup_credentials.outputs.CODE_ARTIFACT_TOKEN }}
-  #       DOCKER_REGISTRY_USER: ${{ steps.setup_credentials.outputs.DOCKER_REGISTRY_USER }}
-  #       DOCKER_REGISTRY_PASSWORD: ${{ steps.setup_credentials.outputs.DOCKER_REGISTRY_PASSWORD }}
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       DOCKER_PROJECT: ${{ env.PROJECT_NAME }}
-
-  #   # TODO maybe we should ensure the s3 backend exists first?
-  #   - name: Terraform Deploy
-  #     uses: ./.github/actions/terraform
-  #     if: steps.semantic.outputs.new_release_published == 'true'
-  #     with:
-  #       MAJOR_VERSION: ${{ steps.semantic.outputs.new_release_major_version }}
-  #       MINOR_VERSION: ${{ steps.semantic.outputs.new_release_minor_version }}
-  #       PATCH_VERSION: ${{ steps.semantic.outputs.new_release_patch_version }}
-  #       PROJECT_NAME: ${{ env.PROJECT_NAME }}
-  #       BOOK_NAME: ${{ env.BOOK_NAME }}
-  #       DOCKER_REGISTRY: ${{ env.DOCKER_REGISTRY }}

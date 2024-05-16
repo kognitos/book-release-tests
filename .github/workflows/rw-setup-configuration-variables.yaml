@@ -11,6 +11,8 @@ on:
     outputs:
       BOOK_NAME:
         value: ${{ jobs.LoadVariables.outputs.BOOK_NAME }}
+      BDK_RUNTIME_VERSION:
+        value: ${{ jobs.LoadVariables.outputs.BDK_RUNTIME_VERSION }}
       AWS_ACCOUNT_ID:
         value: ${{ jobs.LoadVariables.outputs.AWS_ACCOUNT_ID }}
       AWS_REGION:
@@ -25,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       BOOK_NAME: ${{ steps.vars.outputs.BOOK_NAME }}
+      BDK_RUNTIME_VERSION: ${{ jobs.LoadVariables.outputs.BDK_RUNTIME_VERSION }}
       AWS_ACCOUNT_ID: ${{ steps.vars.outputs.AWS_ACCOUNT_ID }}
       AWS_REGION: ${{ steps.vars.outputs.AWS_REGION }}
       DOCKER_REGISTRY: ${{ steps.vars.outputs.DOCKER_REGISTRY }}
@@ -39,6 +42,3 @@ jobs:
       - shell: bash
         id: vars
         run: python ./.github/scripts/setup.py ${{ inputs.CONFIG_FILE_PATH }}
-
-
-

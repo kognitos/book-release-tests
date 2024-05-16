@@ -3,12 +3,16 @@ name: "Setup Credentials"
 inputs:
   AWS_ACCESS_KEY_ID:
     required: true
+    type: string
   AWS_SECRET_ACCESS_KEY:
     required: true
+    type: string
   AWS_ROLE_TO_ASSUME:
     required: true
+    type: string
   AWS_ROLE_EXTERNAL_ID:
     required: true
+    type: string
 
 outputs:
   CODE_ARTIFACT_TOKEN:
@@ -40,6 +44,3 @@ runs:
       token=$(aws codeartifact get-authorization-token --domain-owner 719468614044 --domain kognitos --query 'authorizationToken' --output text)
       echo "::add-mask::$token"
       echo "token=$token" >> $GITHUB_OUTPUT
-  - shell: bash
-    run: |
-      echo "${{ steps.login-ecr.outputs.docker_username_719468614044_dkr_ecr_us_west_2_amazonaws_com }}"
